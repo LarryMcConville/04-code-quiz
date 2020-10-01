@@ -2,12 +2,16 @@ var timerElement = document.getElementById("timer");
 var startButton = document.getElementById("start");
 var submitButton = document.getElementById("submit");
 var questionElement = document.getElementById("question");
-var answerElement = document.getElementById("answer");
+// var answerElement = document.getElementById("answer");
+// var answerClassEl = document.querySelector(".answers");
+// console.log(answerClassEl);
 
 var playerAnswer = '';
 var playerScore = 0;
-var secondsLeft = 3;
+var secondsLeft = 15;
 var nextQuestion = 0;
+var questionObjectKey = '';
+var questionObjectValue = '';
 
 var questionArray = [
     {
@@ -22,11 +26,29 @@ var questionArray = [
     {
         question: "What is 30/3?",
         answers: {
-            a: '3',
-            b: '5',
+            a: '6',
+            b: '7',
             c: '10'
         },
         correctAnswer: 'c'
+    },
+    {
+        question: "What is 0*7?",
+        answers: {
+            a: '0',
+            b: '1',
+            c: '7',
+            d: '-7'
+        },
+        correctAnswer: 'a'
+    },
+    {
+        question: "Is 0 equal to null?",
+        answers: {
+            a: true,
+            b: false
+        },
+        correctAnswer: 'b'
     }
 ];
 
@@ -35,94 +57,96 @@ var highScoreArray = [];
 function setTimer() {
     var timerInterval = setInterval(function () {
         secondsLeft--;
-        timerElement.textContent = secondsLeft;
+        timerElement.textContent = "Timer: " + secondsLeft;
 
         if (secondsLeft === 0) {
             clearInterval(timerInterval);
-            sendMessage();
+            quizOver();
         }
 
     }, 1000);
 }
 
-function sendMessage() {
-    timerElement.textContent = "Game Over";
+function quizOver() {
+    timerElement.textContent = "Quiz Over";
+    //if last question then hide submit button.
+    submitButton.style.display = "none";
 
+    //if all questions are answered and time remains.
+    // clearInterval(timerInterval);
+    // secondsLeft = 0;
     // var imgEl = document.createElement("img");
-
     // imgEl.setAttribute("src", "images/image_1.jpg");
     // mainEl.appendChild(imgEl);
 
 }
 
-//function quizQuestions() {
-// console.log(questionArray);
-//for (var i = 0; i < questionArray.length; i++) {
-//questionElement.textContent = questionArray[i].question;
-//console.log(questionArray[i].question);
-//for (answers in questionArray[i].answers) {
-//load answer radio buttons
-//console.log(questionArray[i].answers);
-//     console.log(answerElement.textContent = questionArray[i].answers[a]);
-//     answerElement.textContent = questionArray[i].answers[a];
-//}
-
-//console.log(questionArray[i].correctAnswer);
-
-//submitButton.addEventListener("click", function () {
-//i++
-//});
-
-//click submit button to:
-//capture response and perform evaluation
-//update the score or decrement the counter as appropriate
-//i++
-//}
-//}
-
-function displayQuestions() {
+function presentQuestion() {
 
     if (nextQuestion < questionArray.length) {
         console.log(questionArray[nextQuestion].question);
-        console.log(questionArray[nextQuestion].answers);
         questionElement.textContent = questionArray[nextQuestion].question;
-        //loop throught answers and build dynamic list of n answers.
-        for (var i = 0; i < questionArray[nextQuestion].answers.length; i++) {
-            console.log(answers[i]);
-            //build answer elements here.
-        }
-        console.log(questionArray[nextQuestion].correctAnswer);
-
-        //display question
-        //display answer a
-        //display answer b
-        //display answer c
+        // appendAnswerClass();
+        presentAnswers();
     } else {
-        //if last question then hide submit button.
-        submitButton.style.display = "none";
+        quizOver();
     }
     nextQuestion++;
 }
 
-function formatQuestions() {
-    //need to load the first question when we enter, other will load with submit.
-    submitButton.addEventListener("click", function () {
-        displayQuestions();
-    })
+function presentAnswers() {
+    //loop through answers and build a dynamic list of n answers.
+    for (var i = 0; i < Object.keys(questionArray[nextQuestion].answers).length; i++) {
+        questionObjectKey = Object.keys(questionArray[nextQuestion].answers)[i];
+        questionObjectValue = Object.values(questionArray[nextQuestion].answers)[i];
 
-    //check user answer
-    //display happy/sad message
-    //increment score if correct
-    //capture response and perform evaluation
-    //update the score or decrement the counter as appropriate
+        buildRadioControl(questionObjectKey, questionObjectValue);
+
+    }
+    checkAnswers();
+    // removeAnswerClass();
+
+};
+
+function checkAnswers() {
+    console.log(questionArray[nextQuestion].correctAnswer);
+};
+
+function appendAnswerClass() {
+    //build div class answers
+    //this is being built with each answer iteration
+    //it needs to be moved to the question function
+    var answersEl = document.createElement("div");
+    answersEl.setAttribute("class", "answers");
+    document.querySelector(".container").appendChild(answersEl);
+};
+
+function removeAnswerClass() {
+    //remove previous answers
+    var removeRadio = document.querySelector(".answers");
+    removeRadio.remove();
+    console.log(removeRadio);
+};
+
+function buildRadioControl(item, choice) {
+    var labelEl = document.createElement("label");
+    labelEl.setAttribute("class", "radio");
+    //answersEl.appendChild(labelEl);
+    document.querySelector(".answers").appendChild(labelEl);
+    labelEl.textContent = item + ' : ' + choice;
+
+    var inputEl = document.createElement("input");
+    inputEl.setAttribute("type", "radio");
+    inputEl.setAttribute("name", "answer");
+    labelEl.appendChild(inputEl);
+
 }
-
 
 startButton.addEventListener("click", function () {
     setTimer();
-    // quizQuestions();
-    formatQuestions();
+    presentQuestion();
     startButton.style.display = "none";
     submitButton.style.display = "inline";
-    //Hide start button and swap out for submit button
 });
+
+submitButton.addEventListener("click", presentQuestion);
