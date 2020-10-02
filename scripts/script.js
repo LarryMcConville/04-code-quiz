@@ -2,6 +2,7 @@ var timerElement = document.getElementById("timer");
 var startButton = document.getElementById("start");
 var submitButton = document.getElementById("submit");
 var questionElement = document.getElementById("question");
+var choiceList = document.getElementById("choice-list");
 
 // var playerAnswer = '';
 var playerScore = 0;
@@ -85,6 +86,12 @@ function presentchoices() {
     for (var i = 0; i < questionArray[question].choices.length; i++) {
         var choices = questionArray[question].choices[i];
         console.log(choices);
+
+        var li = document.createElement("li");
+        li.textContent = choices;
+        li.setAttribute("data-index", i);
+
+        choiceList.appendChild(li);
         //appendRadioControl(questionObjectKey, questionObjectValue);
         // console.log("answer loop question  " + nextQuestion);
         //console.log(questionObjectKey, questionObjectValue);

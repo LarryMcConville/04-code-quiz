@@ -14,17 +14,8 @@ button {
   color: white;
 }
 
-label {
-  float: right;
-}
-
 .container {
   text-align: center;
-}
-
-.inputClass {
-  /* vertical-align: middle; */
-  display: block;
 }
 
 #submit {
