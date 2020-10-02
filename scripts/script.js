@@ -2,7 +2,7 @@ var timerElement = document.getElementById("timer");
 var startButton = document.getElementById("start");
 var submitButton = document.getElementById("submit");
 var questionElement = document.getElementById("question");
-var choiceList = document.getElementById("choice-list");
+var choiceListUl = document.getElementById("choice-list");
 
 // var playerAnswer = '';
 var playerScore = 0;
@@ -67,9 +67,9 @@ function quizOver() {
 
 function presentQuestion() {
     if (question < questionArray.length) {
-        answer = questionArray[question].answer;
         questionElement.textContent = questionArray[question].question;
         console.log(questionArray[question].question);
+        answer = questionArray[question].answer;
 
         presentchoices();
     } else {
@@ -80,9 +80,9 @@ function presentQuestion() {
 }
 
 function presentchoices() {
-    // appendForm();
+    appendUlElement();
 
-    //loop through choices and build a dynamic list of n choices.
+    //loop through choices and build a dynamic list of <li> for n choices.
     for (var i = 0; i < questionArray[question].choices.length; i++) {
         var choices = questionArray[question].choices[i];
         console.log(choices);
@@ -91,26 +91,23 @@ function presentchoices() {
         li.textContent = choices;
         li.setAttribute("data-index", i);
 
-        choiceList.appendChild(li);
-        //appendRadioControl(questionObjectKey, questionObjectValue);
-        // console.log("answer loop question  " + nextQuestion);
-        //console.log(questionObjectKey, questionObjectValue);
+        choiceListUl.appendChild(li);
 
     }
 
 };
 
-function appendForm() {
-    //build a new <form> for every group of new answers.
-    var formEl = document.createElement("form");
-    formEl.setAttribute("class", "radio");
-    document.querySelector(".answers").appendChild(formEl);
+function appendUlElement() {
+    //build a new <ul> for each set of new choices.
+    choiceListUl = document.createElement("ul");
+    choiceListUl.setAttribute("id", "choice-list");
+    document.querySelector(".container").appendChild(choiceListUl);
 };
 
-function removeForm() {
-    //remove <form> containing previous answers
-    var removeForm = document.querySelector(".radio");
-    removeForm.remove();
+function removeUlElement() {
+    //remove <ul> containing previous choices
+    // var removeUl = document.querySelector(".choice-list");
+    choiceListUl.remove();
     // console.log(removeForm);
 };
 
@@ -159,6 +156,6 @@ startButton.addEventListener("click", function () {
 
 submitButton.addEventListener("click", function () {
     checkAnswer();
-    // removeForm();
+    removeUlElement();
     presentQuestion();
 });
