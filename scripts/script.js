@@ -2,6 +2,7 @@ var timerElement = document.getElementById("timer");
 var startButton = document.getElementById("start");
 var submitButton = document.getElementById("submit");
 var questionElement = document.getElementById("question");
+var ulContainer = document.getElementById("ul-container");
 var choiceListUl = document.getElementById("choice-list");
 
 // var playerAnswer = '';
@@ -80,6 +81,7 @@ function presentQuestion() {
 }
 
 function presentchoices() {
+    //build a new <ul> for each set of new choices.
     appendUlElement();
 
     //loop through choices and build a dynamic list of <li> for n choices.
@@ -101,7 +103,7 @@ function appendUlElement() {
     //build a new <ul> for each set of new choices.
     choiceListUl = document.createElement("ul");
     choiceListUl.setAttribute("id", "choice-list");
-    document.querySelector(".container").appendChild(choiceListUl);
+    document.getElementById("ul-container").appendChild(choiceListUl);
 };
 
 function removeUlElement() {
@@ -159,3 +161,9 @@ submitButton.addEventListener("click", function () {
     removeUlElement();
     presentQuestion();
 });
+
+//When an element inside of the ulContainer is clicked.
+ulContainer.addEventListener("click", function (event) {
+    var element = event.target;
+    console.log(element);
+})
