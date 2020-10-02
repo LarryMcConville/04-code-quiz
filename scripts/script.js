@@ -3,50 +3,35 @@ var startButton = document.getElementById("start");
 var submitButton = document.getElementById("submit");
 var questionElement = document.getElementById("question");
 
-var playerAnswer = '';
-var correctAnswer = '';
+// var playerAnswer = '';
 var playerScore = 0;
 var secondsLeft = 120;
-var nextQuestion = 0;
-var questionObjectKey = '';
-var questionObjectValue = '';
+var question = 0;
+//var choices = '';
+var answer = '';
+// var questionObjectKey = '';
+// var questionObjectValue = '';
 
 var questionArray = [
     {
         question: "What is 10/2?",
-        answers: {
-            a: '3',
-            b: '5',
-            c: '115'
-        },
-        correctAnswer: 'b'
+        choices: ['3', '5', '115'],
+        answer: '5'
     },
     {
         question: "What is 30/3?",
-        answers: {
-            a: '6',
-            b: '7',
-            c: '10'
-        },
-        correctAnswer: 'c'
+        choices: ['6', '7', '10'],
+        answer: '10'
     },
     {
         question: "What is 0*7?",
-        answers: {
-            a: '0',
-            b: '1',
-            c: '7',
-            d: '-7'
-        },
-        correctAnswer: 'a'
+        choices: ['0', '1', '7', '-7'],
+        answer: '0'
     },
     {
         question: "Is 0 equal to null?",
-        answers: {
-            a: true,
-            b: false
-        },
-        correctAnswer: 'b'
+        choices: [true, false],
+        answer: false
     }
 ];
 
@@ -80,15 +65,12 @@ function quizOver() {
 }
 
 function presentQuestion() {
-    //remove previously built form so we can load new radio buttons.
-    //removeForm();
-    if (nextQuestion < questionArray.length) {
-        correctAnswer = questionArray[nextQuestion].correctAnswer;
-        questionElement.textContent = questionArray[nextQuestion].question;
-        console.log(questionArray[nextQuestion].question);
-        // console.log("question loop question  " + nextQuestion);
-        // console.log('presentQuestion function correct answer ' + correctAnswer);
-        presentAnswers();
+    if (question < questionArray.length) {
+        answer = questionArray[question].answer;
+        questionElement.textContent = questionArray[question].question;
+        console.log(questionArray[question].question);
+
+        presentchoices();
     } else {
         quizOver();
     }
@@ -96,17 +78,16 @@ function presentQuestion() {
 
 }
 
-function presentAnswers() {
-    appendForm();
+function presentchoices() {
+    // appendForm();
 
-    //loop through answers and build a dynamic list of n answers.
-    for (var i = 0; i < Object.keys(questionArray[nextQuestion].answers).length; i++) {
-        questionObjectKey = Object.keys(questionArray[nextQuestion].answers)[i];
-        questionObjectValue = Object.values(questionArray[nextQuestion].answers)[i];
-
-        appendRadioControl(questionObjectKey, questionObjectValue);
+    //loop through choices and build a dynamic list of n choices.
+    for (var i = 0; i < questionArray[question].choices.length; i++) {
+        var choices = questionArray[question].choices[i];
+        console.log(choices);
+        //appendRadioControl(questionObjectKey, questionObjectValue);
         // console.log("answer loop question  " + nextQuestion);
-        console.log(questionObjectKey, questionObjectValue);
+        //console.log(questionObjectKey, questionObjectValue);
 
     }
 
@@ -127,31 +108,22 @@ function removeForm() {
 };
 
 function checkAnswer() {
-    //compare user selection before loading next question.
-    //compare playerAnswer to correctAnswer.
-    //if correct playerScore++
-    //if not correct secondsLeft--
 
-    console.log('checkAnswer function, correct answer is  ' + correctAnswer);
+    console.log('checkAnswer function, correct answer is  ' + answer);
 
     // console.log("i'm in check answer loop  " + nextQuestion);
-    for (var i = 0; i < Object.keys(questionArray[nextQuestion].answers).length; i++) {
-        key = Object.keys(questionArray[nextQuestion].answers)[i];
-        value = Object.values(questionArray[nextQuestion].answers)[i];
-        console.log(" What object key am I?  " + key);
-        console.log(" What object value am I?  " + value);
-        console.log(" What is the correct answer?  " + correctAnswer);
-        console.log(document.getElementById(key).checked);
-        if (document.getElementById(key).checked === true) {
-            if (key === correctAnswer) {
-                playerScore++;
-            } else {
-                secondsLeft -= 10;
-            }
-        };
-    }
-    console.log("Player Score =  " + playerScore);
-    nextQuestion++;
+    // for (var i = 0; i < Object.keys(questionArray[nextQuestion].answers).length; i++) {
+    //     key = Object.keys(questionArray[nextQuestion].answers)[i];
+    //     value = Object.values(questionArray[nextQuestion].answers)[i];
+    //     if (document.getElementById(key).checked === true) {
+    //         if (key === correctAnswer) {
+    //             playerScore++;
+    //         } else {
+    //             secondsLeft -= 10;
+    //         }
+    //     };
+    // }
+    question++;
 }
 
 function appendRadioControl(item, choice) {
@@ -180,6 +152,6 @@ startButton.addEventListener("click", function () {
 
 submitButton.addEventListener("click", function () {
     checkAnswer();
-    removeForm();
+    // removeForm();
     presentQuestion();
 });
