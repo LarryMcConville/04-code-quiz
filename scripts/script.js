@@ -1,6 +1,6 @@
 var timerElement = document.getElementById("timer");
 var startButton = document.getElementById("start");
-var submitButton = document.getElementById("submit");
+// var submitButton = document.getElementById("submit");
 var questionElement = document.getElementById("question");
 var ulContainer = document.getElementById("ul-container");
 var choiceListUl = document.getElementById("choice-list");
@@ -55,7 +55,7 @@ function setTimer() {
 function quizOver() {
     timerElement.textContent = "Quiz Over";
     //if last question then hide submit button.
-    submitButton.style.display = "none";
+    // submitButton.style.display = "none";
 
     //if all questions are answered and time remains.
     // clearInterval(timerInterval);
@@ -113,9 +113,10 @@ function removeUlElement() {
     // console.log(removeForm);
 };
 
-function checkAnswer() {
+function checkAnswer(event) {
 
     console.log('checkAnswer function, correct answer is  ' + answer);
+    console.log(event);
 
     // console.log("i'm in check answer loop  " + nextQuestion);
     // for (var i = 0; i < Object.keys(questionArray[nextQuestion].answers).length; i++) {
@@ -153,17 +154,21 @@ startButton.addEventListener("click", function () {
     setTimer();
     presentQuestion();
     startButton.style.display = "none";
-    submitButton.style.display = "inline";
+    // submitButton.style.display = "inline";
 });
 
-submitButton.addEventListener("click", function () {
-    checkAnswer();
-    removeUlElement();
-    presentQuestion();
-});
+//submitButton.addEventListener("click", function () {
+// checkAnswer();
+// removeUlElement();
+// presentQuestion();
+//});
 
 //When an element inside of the ulContainer is clicked.
 ulContainer.addEventListener("click", function (event) {
     var element = event.target;
-    console.log(element);
+    // console.log(element);
+    // console.log(element.textContent);
+    checkAnswer(element.textContent);
+    removeUlElement();
+    presentQuestion();
 })
