@@ -5,14 +5,10 @@ var questionElement = document.getElementById("question");
 var ulContainer = document.getElementById("ul-container");
 var choiceListUl = document.getElementById("choice-list");
 
-// var playerAnswer = '';
 var playerScore = 0;
 var secondsLeft = 120;
 var question = 0;
-//var choices = '';
 var answer = '';
-// var questionObjectKey = '';
-// var questionObjectValue = '';
 
 var questionArray = [
     {
@@ -32,8 +28,13 @@ var questionArray = [
     },
     {
         question: "Is 0 equal to null?",
-        choices: [true, false],
-        answer: false
+        choices: ['true', 'false'],
+        answer: 'false'
+    },
+    {
+        question: "Which number doesn't belong?",
+        choices: ['1', '2', '4', '8', '16', '32', '42', '64', '128', '256'],
+        answer: '42'
     }
 ];
 
@@ -44,7 +45,7 @@ function setTimer() {
         secondsLeft--;
         timerElement.textContent = "Timer: " + secondsLeft;
 
-        if (secondsLeft === 0) {
+        if (secondsLeft === 0 || question === questionArray.length) {
             clearInterval(timerInterval);
             quizOver();
         }
@@ -54,30 +55,17 @@ function setTimer() {
 
 function quizOver() {
     timerElement.textContent = "Quiz Over";
-    //if last question then hide submit button.
-    // submitButton.style.display = "none";
-
-    //if all questions are answered and time remains.
-    // clearInterval(timerInterval);
-    // secondsLeft = 1;
-    // var imgEl = document.createElement("img");
-    // imgEl.setAttribute("src", "images/image_1.jpg");
-    // mainEl.appendChild(imgEl);
-
+    // Add quizOver housekeeping.
 }
 
 function presentQuestion() {
     if (question < questionArray.length) {
         questionElement.textContent = questionArray[question].question;
-        console.log(questionArray[question].question);
         answer = questionArray[question].answer;
-
         presentchoices();
     } else {
         quizOver();
     }
-    //nextQuestion++;
-
 }
 
 function presentchoices() {
@@ -87,20 +75,18 @@ function presentchoices() {
     //loop through choices and build a dynamic list of <li> for n choices.
     for (var i = 0; i < questionArray[question].choices.length; i++) {
         var choices = questionArray[question].choices[i];
-        console.log(choices);
+        // console.log(choices);
 
         var li = document.createElement("li");
         li.textContent = choices;
         li.setAttribute("data-index", i);
 
         choiceListUl.appendChild(li);
-
     }
-
 };
 
 function appendUlElement() {
-    //build a new <ul> for each set of new choices.
+    //build a new <ul> for each new question.
     choiceListUl = document.createElement("ul");
     choiceListUl.setAttribute("id", "choice-list");
     document.getElementById("ul-container").appendChild(choiceListUl);
@@ -108,28 +94,21 @@ function appendUlElement() {
 
 function removeUlElement() {
     //remove <ul> containing previous choices
-    // var removeUl = document.querySelector(".choice-list");
     choiceListUl.remove();
-    // console.log(removeForm);
 };
 
 function checkAnswer(event) {
+    if (event === answer) {
+        console.log("Correct!!!");
+        playerScore++;
+    } else {
+        console.log("Wrong Answer!!!");
+        secondsLeft -= 10;
+    }
 
     console.log('checkAnswer function, correct answer is  ' + answer);
     console.log(event);
 
-    // console.log("i'm in check answer loop  " + nextQuestion);
-    // for (var i = 0; i < Object.keys(questionArray[nextQuestion].answers).length; i++) {
-    //     key = Object.keys(questionArray[nextQuestion].answers)[i];
-    //     value = Object.values(questionArray[nextQuestion].answers)[i];
-    //     if (document.getElementById(key).checked === true) {
-    //         if (key === correctAnswer) {
-    //             playerScore++;
-    //         } else {
-    //             secondsLeft -= 10;
-    //         }
-    //     };
-    // }
     question++;
 }
 
@@ -154,14 +133,7 @@ startButton.addEventListener("click", function () {
     setTimer();
     presentQuestion();
     startButton.style.display = "none";
-    // submitButton.style.display = "inline";
 });
-
-//submitButton.addEventListener("click", function () {
-// checkAnswer();
-// removeUlElement();
-// presentQuestion();
-//});
 
 //When an element inside of the ulContainer is clicked.
 ulContainer.addEventListener("click", function (event) {
