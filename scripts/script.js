@@ -5,7 +5,7 @@ var ulContainer = document.getElementById("ul-container");
 var choiceListUl = document.getElementById("choice-list");
 
 var playerScore = 0;
-var secondsLeft = 30;
+var secondsLeft = 60;
 var question = 0;
 var answer = "";
 
@@ -53,7 +53,7 @@ function setTimer() {
 }
 
 function quizOver() {
-  timerElement.textContent = "Quiz Over";
+  $("#timer").text("Quiz Over");
   // Add quizOver housekeeping.
 }
 
@@ -68,7 +68,6 @@ function presentQuestion() {
 }
 
 function presentchoices() {
-  //build a new <ul> for each set of new choices.
   appendUlElement();
 
   //loop through choices and build a dynamic list of <li> for n choices.
@@ -96,37 +95,19 @@ function removeUlElement() {
   choiceListUl.remove();
 }
 
-function checkAnswer(event) {
-  if (event === answer) {
+function checkAnswer(playerChoice) {
+  if (playerChoice === answer) {
     console.log("Correct!!!");
     playerScore++;
   } else {
     console.log("Wrong Answer!!!");
     secondsLeft -= 10;
   }
-
-  console.log("checkAnswer function, correct answer is  " + answer);
-  console.log(event);
-
+  $("#score").text(playerScore);
   question++;
 }
 
-function appendRadioControl(item, choice) {
-  var labelEl = document.createElement("label");
-  labelEl.setAttribute("for", item);
-  labelEl.setAttribute("class", "labelClass");
-  document.querySelector(".radio").appendChild(labelEl);
-  labelEl.textContent = item + " : " + choice;
-
-  var inputEl = document.createElement("input");
-  inputEl.setAttribute("type", "radio");
-  inputEl.setAttribute("name", "choice");
-  inputEl.setAttribute("class", "inputClass");
-  inputEl.setAttribute("id", item);
-  inputEl.setAttribute("value", item + " : " + choice);
-  document.querySelector(".radio").appendChild(inputEl);
-}
-
+//$("#start").on("click", function () {
 startButton.addEventListener("click", function () {
   setTimer();
   presentQuestion();
@@ -135,10 +116,9 @@ startButton.addEventListener("click", function () {
 
 //When an element inside of the ulContainer is clicked.
 ulContainer.addEventListener("click", function (event) {
-  var element = event.target;
-  // console.log(element);
-  // console.log(element.textContent);
-  checkAnswer(element.textContent);
+  //   console.log(event.target.textContent);
+
+  checkAnswer(event.target.textContent);
   removeUlElement();
   presentQuestion();
 });
