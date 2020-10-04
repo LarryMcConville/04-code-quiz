@@ -1,8 +1,9 @@
-// var timerElement = document.getElementById("timer");
+var timerElement = document.getElementById("timer");
 var startButton = document.getElementById("start");
 var questionElement = document.getElementById("question");
 var ulContainer = document.getElementById("ul-container");
 var choiceListUl = document.getElementById("choice-list");
+var scoreElement = document.getElementById("score");
 
 var playerScore = 0;
 var secondsLeft = 60;
@@ -42,8 +43,8 @@ var highScoreArray = [];
 function setTimer() {
   var timerInterval = setInterval(function () {
     secondsLeft--;
-    // timerElement.textContent = "Timer: " + secondsLeft;
-    $("#timer").text(secondsLeft);
+    timerElement.textContent = secondsLeft;
+    //$("#timer").text(secondsLeft);
 
     if (secondsLeft === 0 || question === questionArray.length) {
       clearInterval(timerInterval);
@@ -53,8 +54,15 @@ function setTimer() {
 }
 
 function quizOver() {
-  $("#timer").text("Quiz Over");
+  //   $("#timer").text("Quiz Over");
+  timerElement.textContent = "Quiz Over";
   // Add quizOver housekeeping.
+  // call remove ul.
+  // append a form to ul-container
+  // prompt player to enter initials.
+  // if null-empty then use 'dad'.
+  // push player initials and score to highScoreArray.
+  //json stringify and update local storage.
 }
 
 function presentQuestion() {
@@ -73,7 +81,6 @@ function presentchoices() {
   //loop through choices and build a dynamic list of <li> for n choices.
   for (var i = 0; i < questionArray[question].choices.length; i++) {
     var choices = questionArray[question].choices[i];
-    // console.log(choices);
 
     var li = document.createElement("li");
     li.textContent = choices;
@@ -97,18 +104,20 @@ function removeUlElement() {
 
 function checkAnswer(playerChoice) {
   if (playerChoice === answer) {
-    console.log("Correct!!!");
+    // console.log("Correct!!!");
     playerScore++;
   } else {
-    console.log("Wrong Answer!!!");
+    // console.log("Wrong Answer!!!");
     secondsLeft -= 10;
   }
-  $("#score").text(playerScore);
+  //   $("#score").text(playerScore);
+  scoreElement.textContent = playerScore;
   question++;
 }
 
-//$("#start").on("click", function () {
-startButton.addEventListener("click", function () {
+$("#start").on("click", function () {
+  //startButton.addEventListener("click", function () {
+  //load highScoreArray with json parse.
   setTimer();
   presentQuestion();
   startButton.style.display = "none";
@@ -118,7 +127,7 @@ startButton.addEventListener("click", function () {
 ulContainer.addEventListener("click", function (event) {
   //   console.log(event.target.textContent);
 
-  checkAnswer(event.target.textContent);
+  checkAnswer(event.target.textContent.trim());
   removeUlElement();
   presentQuestion();
 });
