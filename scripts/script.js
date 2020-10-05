@@ -136,15 +136,23 @@ function presentHighScores() {
   leaderboardUl = document.createElement("ul");
   leaderboardUl.setAttribute("class", "jumbotron");
   leaderboardUl.setAttribute("id", "leaderboard-list");
-  leaderboardUl.textContent = "Current Leaders";
+  leaderboardUl.textContent = "Top 5 Players";
   document.getElementById("ul-container").appendChild(leaderboardUl);
 
-  for (var i = 0; i < highscores.length; i++) {
-    var leaderboardPlayer = highscores[i].player;
-    var leaderboardScore = highscores[i].score;
+  //sort highscores array in descending order.
+  highscores.sort((a, b) => {
+    return b.score - a.score;
+  });
+
+  //only render the top 5 scores.
+  topFiveScores = highscores.slice(0, 5);
+
+  for (var i = 0; i < topFiveScores.length; i++) {
+    var leaderboardPlayer = topFiveScores[i].player;
+    var leaderboardScore = topFiveScores[i].score;
 
     var li = document.createElement("li");
-    li.textContent = leaderboardPlayer + " : " + leaderboardScore;
+    li.textContent = leaderboardPlayer + " - " + leaderboardScore;
     //li.setAttribute("data-index", i);
 
     leaderboardUl.appendChild(li);
@@ -207,11 +215,9 @@ ulContainer.addEventListener("submit", function (event) {
   saveHighScores();
   loadHighScores();
 
-  console.log(newScore);
-
-  //TODO: hide label and input once submitted
+  // research how to reload the page here?
+  //   startButton.style.display = "inline-block";
   document.getElementById("scoreForm").style.display = "none";
-  //document.getElementById("playerText").value = "";
 });
 
 //When an element inside of the ulContainer is clicked.
