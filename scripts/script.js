@@ -1,10 +1,13 @@
 var timerElement = document.getElementById("timer");
 var startButton = document.getElementById("start");
-var viewHighScores = document.getElementById("btn-scores");
+var viewHighScores = document.getElementById("btn-show-scores");
+var clearHighScores = document.getElementById("btn-clear-scores");
 var questionElement = document.getElementById("question");
 var ulContainer = document.getElementById("ul-container");
 var choiceListUl = document.getElementById("choice-list");
 var scoreElement = document.getElementById("score");
+
+clearHighScores.style.display = "none";
 
 var playerScore = 0;
 var secondsLeft = 0;
@@ -63,13 +66,15 @@ function quizOver() {
   removeUlElement();
   presentHighScores();
   playerSubmit();
+  console.log("Before " + clearHighScores);
   startButton.style.display = "inline-block";
   viewHighScores.style.display = "inline-block";
+  clearHighScores.style.display = "inline-block";
+  console.log("After " + clearHighScores);
 }
 
 function loadHighScores() {
   var storedHighScores = JSON.parse(localStorage.getItem("highscores"));
-  //console.log(storedHighScores);
   if (storedHighScores !== null) {
     highscores = storedHighScores;
   }
@@ -84,8 +89,6 @@ function presentQuestion() {
     questionElement.textContent = questionArray[question].question;
     answer = questionArray[question].answer;
     presentchoices();
-  } else {
-    // quizOver();
   }
 }
 
@@ -98,8 +101,6 @@ function presentchoices() {
 
     var li = document.createElement("li");
     li.textContent = choices;
-    //li.setAttribute("data-index", i);
-
     choiceListUl.appendChild(li);
   }
 }
@@ -146,8 +147,6 @@ function removeScoreUlElement() {
 function presentHighScores() {
   removeScoreUlElement();
   appendScoreUlElement();
-  //document.getElementById("leaderboard-list").remove();
-  //if (secondsLeft === 0 || question === questionArray.length) {
 
   //sort highscores array in descending order.
   highscores.sort((a, b) => {
@@ -163,12 +162,8 @@ function presentHighScores() {
 
     var li = document.createElement("li");
     li.textContent = leaderboardPlayer + " - " + leaderboardScore;
-    //li.setAttribute("data-index", i);
-
     leaderboardUl.appendChild(li);
   }
-  //playerSubmit();
-  //}
 }
 
 function playerSubmit() {
@@ -184,7 +179,7 @@ function playerSubmit() {
 
   label = document.createElement("label");
   label.setAttribute("for", "playerText");
-  label.textContent = "Enter your Name";
+  label.textContent = "Enter your Name: ";
   form.appendChild(label);
 
   input = document.createElement("input");
@@ -198,17 +193,18 @@ function playerSubmit() {
 startButton.addEventListener("click", function () {
   secondsLeft = 60;
   question = 0;
+  playerScore = 0;
   removeScoreUlElement();
   setTimer();
   presentQuestion();
   startButton.style.display = "none";
   viewHighScores.style.display = "none";
+  clearHighScores.style.display = "none";
 });
 
 ulContainer.addEventListener("submit", function (event) {
   event.preventDefault();
 
-  //console.log(document.getElementById("playerText").value.trim());
   //TODO: if player input is null, pass 'Player One' as player.
   var playerInput = document.getElementById("playerText").value.trim();
 
@@ -225,11 +221,12 @@ ulContainer.addEventListener("submit", function (event) {
   highscores.push(newScore);
   saveHighScores();
   loadHighScores();
-
-  // research how to reload the page here?
-  //   startButton.style.display = "inline-block";
-  //location.reload();
-  document.getElementById("scoreForm").style.display = "none";
+  presentHighScores();
+  //if the game is over and we have dropped the score form, do nothing.
+  var scoreForm = document.getElementById("scoreForm");
+  if (scoreForm != null) {
+    document.getElementById("scoreForm").style.display = "none";
+  }
 });
 
 //When an element inside of the ulContainer is clicked.
@@ -240,8 +237,11 @@ ulContainer.addEventListener("click", function (event) {
 });
 
 viewHighScores.addEventListener("click", function (event) {
-  //prevent players from popping high scores during game play.
-  //removeUlElement();  should be remove leaderboard-list
-  //document.getElementById("leaderboard-list").remove();
+  presentHighScores();
+  clearHighScores.style.display = "inline-block";
+});
+
+clearHighScores.addEventListener("click", function (event) {
+  highscores = [];
   presentHighScores();
 });

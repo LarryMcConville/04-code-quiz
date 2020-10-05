@@ -10,7 +10,6 @@
       integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
       crossorigin="anonymous"
     />
-    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css"> -->
     <link rel="stylesheet" href="./style/style.css" />
     <link rel="icon" href="./images/favicon.ico" type="image/ico" sizes="16x16" />
     <title>Question Game</title>
@@ -20,13 +19,11 @@
     <main class="container">
       <!-- make this a navbar  -->
       <div>
-        <h5>View Highscores</h5>
         <!-- <h5 id="timer">Timer: 0</h5> -->
-        <p>Timer: <span id="timer">0</span></p>
-        <!-- <p>Score: <span id="score">0</span></p> -->
+        <h4>Timer: <span id="timer">0</span></h4>
       </div>
 
-      <h4 class="jumbotron" id="question">Sherbet's JavaScript Quiz</h4>
+      <h4 class="jumbotron" id="question">JavaScript Fundamentals Quiz</h4>
 
       <div class="container" id="ul-container">
         <!-- dynamically build <li> choice list here -->
@@ -35,7 +32,8 @@
 
       <div>
         <button id="start">Begin Quiz</button>
-        <button id="btn-scores">Show Scores</button>
+        <button id="btn-show-scores">Show Scores</button>
+        <button id="btn-clear-scores">Clear Scores</button>
       </div>
     </main>
 
