@@ -1,12 +1,13 @@
 var timerElement = document.getElementById("timer");
 var startButton = document.getElementById("start");
+var viewHighScores = document.getElementById("btn-scores");
 var questionElement = document.getElementById("question");
 var ulContainer = document.getElementById("ul-container");
 var choiceListUl = document.getElementById("choice-list");
 var scoreElement = document.getElementById("score");
 
 var playerScore = 0;
-var secondsLeft = 60;
+var secondsLeft = 0;
 var question = 0;
 var answer = "";
 
@@ -38,10 +39,9 @@ var questionArray = [
   },
 ];
 
-//TODO: define as empty array, remove array contents.
 var highscores = [];
 
-//Load local storage regardless if user has started a session.
+//Load local storage when app launches.
 loadHighScores();
 
 function setTimer() {
@@ -61,14 +61,10 @@ function quizOver() {
   questionElement.textContent = " You scored " + playerScore + " points!!!";
   console.log(timerElement.textContent);
   removeUlElement();
-  //   appendUlElement();
-  //TODO: Add quizOver housekeeping.
   presentHighScores();
-  // TODO: Change question jumbo to leaderboard text.
-  // prompt player to enter initials.
-  // if null-empty then use 'dad'.
-  // push player initials and score to highScoreArray.
-  //json stringify and update local storage.
+  playerSubmit();
+  startButton.style.display = "inline-block";
+  viewHighScores.style.display = "inline-block";
 }
 
 function loadHighScores() {
@@ -90,7 +86,6 @@ function presentQuestion() {
     presentchoices();
   } else {
     // quizOver();
-    //FIXME: - either add some logic here or flip this to !question to remove else.
   }
 }
 
@@ -103,7 +98,7 @@ function presentchoices() {
 
     var li = document.createElement("li");
     li.textContent = choices;
-    li.setAttribute("data-index", i);
+    //li.setAttribute("data-index", i);
 
     choiceListUl.appendChild(li);
   }
@@ -127,17 +122,32 @@ function checkAnswer(playerChoice) {
   } else {
     secondsLeft -= 10;
   }
-  //   $("#score").text(playerScore);
-  //   scoreElement.textContent = playerScore;
   question++;
 }
 
-function presentHighScores() {
+function appendScoreUlElement() {
   leaderboardUl = document.createElement("ul");
   leaderboardUl.setAttribute("class", "jumbotron");
   leaderboardUl.setAttribute("id", "leaderboard-list");
   leaderboardUl.textContent = "Top 5 Players";
   document.getElementById("ul-container").appendChild(leaderboardUl);
+}
+
+function removeScoreUlElement() {
+  var removeScores = document.getElementById("leaderboard-list");
+  if (removeScores !== null) {
+    console.log("leaderboard-list exists");
+    removeScores.remove();
+  } else {
+    console.log("leaderboard-list does not exist");
+  }
+}
+
+function presentHighScores() {
+  removeScoreUlElement();
+  appendScoreUlElement();
+  //document.getElementById("leaderboard-list").remove();
+  //if (secondsLeft === 0 || question === questionArray.length) {
 
   //sort highscores array in descending order.
   highscores.sort((a, b) => {
@@ -157,14 +167,12 @@ function presentHighScores() {
 
     leaderboardUl.appendChild(li);
   }
-  playerSubmit();
+  //playerSubmit();
+  //}
 }
 
 function playerSubmit() {
-  //TODO: add one more <li> with a button so users can submit their initials.
   var leaderboardListUl = document.getElementById("leaderboard-list");
-
-  console.log("playerSubmit function called");
 
   hr = document.createElement("hr");
   leaderboardListUl.appendChild(hr);
@@ -187,18 +195,21 @@ function playerSubmit() {
   form.appendChild(input);
 }
 
-//$("#start").on("click", function () {
 startButton.addEventListener("click", function () {
-  //TODO: load highScoreArray with json parse.
+  secondsLeft = 60;
+  question = 0;
+  removeScoreUlElement();
   setTimer();
   presentQuestion();
   startButton.style.display = "none";
+  viewHighScores.style.display = "none";
 });
 
 ulContainer.addEventListener("submit", function (event) {
   event.preventDefault();
 
   //console.log(document.getElementById("playerText").value.trim());
+  //TODO: if player input is null, pass 'Player One' as player.
   var playerInput = document.getElementById("playerText").value.trim();
 
   // Return from function early if submitted todoText is blank
@@ -217,14 +228,20 @@ ulContainer.addEventListener("submit", function (event) {
 
   // research how to reload the page here?
   //   startButton.style.display = "inline-block";
+  //location.reload();
   document.getElementById("scoreForm").style.display = "none";
 });
 
 //When an element inside of the ulContainer is clicked.
 ulContainer.addEventListener("click", function (event) {
-  //   console.log(event.target.textContent);
-
   checkAnswer(event.target.textContent.trim());
   removeUlElement();
   presentQuestion();
+});
+
+viewHighScores.addEventListener("click", function (event) {
+  //prevent players from popping high scores during game play.
+  //removeUlElement();  should be remove leaderboard-list
+  //document.getElementById("leaderboard-list").remove();
+  presentHighScores();
 });
