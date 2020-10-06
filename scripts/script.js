@@ -51,6 +51,16 @@ var questionArray = [
     choices: ['msg("Hello World");', 'alertBox("Hello World");', 'msgBox("Hello World");', 'alert("Hello World");'],
     answer: 'alert("Hello World");',
   },
+  {
+    question: "How do you create a function in JavaScript?",
+    choices: ["function:myFunction()", "function = myFunction()", "function myFunction()"],
+    answer: "function myFunction()",
+  },
+  {
+    question: "How do you call a function named 'myFunction'?",
+    choices: ["call function myFunction()", "myFunction()", "call myFunction()"],
+    answer: "myFunction()",
+  },
 ];
 
 //Highscore array stored on users computer.
@@ -75,6 +85,7 @@ function setTimer() {
     timerElement.textContent = secondsLeft;
 
     if (secondsLeft === 0 || question === questionArray.length) {
+      playerScore = secondsLeft;
       clearInterval(timerInterval);
       quizOver();
     }
@@ -138,9 +149,7 @@ function removeUlElement() {
 }
 
 function checkAnswer(playerChoice) {
-  if (playerChoice === answer) {
-    playerScore++;
-  } else {
+  if (playerChoice !== answer) {
     secondsLeft -= 10;
   }
   question++;
