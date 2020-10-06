@@ -4,24 +4,34 @@
   box-sizing: border-box;
 }
 
+body {
+  /* background-color: #333; */
+}
+
 button {
   padding: 10px;
   margin: 24px;
+  border: 0;
   cursor: pointer;
-  font-size: 24px;
-  background-color: #ff5d88;
+  font-size: 1rem;
+  background-color: #8a4d76;
   border-radius: 20px;
-  color: white;
+  color: #ffffff;
 }
 
 button:hover {
-  background-color: #febc5d;
+  background-color: #00d1b2;
+}
+
+h4 {
+  font-weight: lighter;
+  color: #ffffff;
 }
 
 ul {
   list-style-type: none;
   padding: 0;
-  background-color: white;
+  color: #ffffff;
 }
 
 li {
@@ -29,10 +39,11 @@ li {
   margin-top: 5px;
   margin-bottom: 5px;
   padding: 5px;
-  background-color: #ff5d88;
-  color: white;
-  font-size: 24px;
+  background-color: #8a4d76;
+  color: #ffffff;
+  font-size: 1rem;
   line-height: 1.5;
+  border-radius: 0.25rem;
 }
 
 li:before {
@@ -47,18 +58,44 @@ li::after {
 }
 
 li:hover {
-  background-color: #febc5d;
+  background-color: #00d1b2;
 }
 
+hr {
+  border: 1px solid #ffffff;
+}
+
+label {
+  margin: 0;
+  padding: 0.5rem;
+}
 .container {
   text-align: center;
-  /* width: 80%; */
+  padding: 15px;
+  background-color: #333;
+}
+
+#question {
+  margin: 0;
+  padding: 2rem;
 }
 
 .jumbotron {
-  background-color: #33ffb2;
+  background-color: #8a4d76;
+}
+
+#ul-container {
+  padding: 1rem 0 1rem 0;
 }
 
 #leaderboard-list {
-  font-size: 24px;
+  font-size: 1rem;
+  font-weight: lighter;
+  background-color: #333;
+  padding: 1rem 0 1rem 0;
+  margin: 0;
+}
+
+#btn-clear-scores {
+  display: none;
 }
