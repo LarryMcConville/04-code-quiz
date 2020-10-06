@@ -1,3 +1,4 @@
+//variables mapped to HTML Elements.
 var timerElement = document.getElementById("timer");
 var startButton = document.getElementById("start");
 var viewHighScores = document.getElementById("btn-show-scores");
@@ -7,46 +8,67 @@ var ulContainer = document.getElementById("ul-container");
 var choiceListUl = document.getElementById("choice-list");
 var scoreElement = document.getElementById("score");
 
-clearHighScores.style.display = "none";
-
+//Global variables.
 var playerScore = 0;
 var secondsLeft = 0;
 var question = 0;
 var answer = "";
 
+//Question Array.
 var questionArray = [
   {
-    question: "What is 10/2?",
-    choices: ["3", "5", "115"],
-    answer: "5",
+    question: "Inside which HTML element do we place JavaScript?",
+    choices: ["<javascript>", "<scripting>", "<script>", "<js>"],
+    answer: "<script>",
   },
   {
-    question: "What is 30/3?",
-    choices: ["6", "7", "10"],
-    answer: "10",
+    question: 'What is the correct JavaScript syntax to change the content of <p id="demo">This is a demonstration.</p>?',
+    choices: [
+      '#demo.innerHTML = "Hello World!";',
+      'document.getElementById("demo").innerHTML = "Hello World!";',
+      'document.getElement("p").innerHTML = "Hello World!";',
+      'document.getElementByName("p").innerHTML = "Hello World!";',
+    ],
+    answer: 'document.getElementById("demo").innerHTML = "Hello World!";',
   },
   {
-    question: "What is 0*7?",
-    choices: ["0", "1", "7", "-7"],
-    answer: "0",
+    question: "Where is the correct place to insert JavaScript?",
+    choices: ["The <head> section", "The <body> section", "Both the <head> section and the <body> section are correct"],
+    answer: "The <body> section",
   },
   {
-    question: "Is 0 equal to null?",
-    choices: ["true", "false"],
-    answer: "false",
+    question: 'What is the correct syntax for referring to an external script called "xxx.js"?',
+    choices: ['<script href="xxx.js">', '<script name="xxx.js">', '<script src="xxx.js">'],
+    answer: '<script src="xxx.js">',
   },
   {
-    question: "Which number doesn't belong?",
-    choices: ["1", "2", "4", "8", "16", "32", "42", "64", "128", "256"],
-    answer: "42",
+    question: "The external JavaScript file must contain the <script> tag.",
+    choices: ["True", "False"],
+    answer: "False",
+  },
+  {
+    question: 'How do you write "Hello World" in an alert box?',
+    choices: ['msg("Hello World");', 'alertBox("Hello World");', 'msgBox("Hello World");', 'alert("Hello World");'],
+    answer: 'alert("Hello World");',
   },
 ];
 
+//Highscore array stored on users computer.
 var highscores = [];
 
 //Load local storage when app launches.
 loadHighScores();
 
+function init() {
+  secondsLeft = 60;
+  question = 0;
+  playerScore = 0;
+  removeScoreUlElement();
+  setTimer();
+  presentQuestion();
+}
+
+//Timer decrements secondsLeft by 1 on a 1000ms interval.
 function setTimer() {
   var timerInterval = setInterval(function () {
     secondsLeft--;
@@ -59,18 +81,16 @@ function setTimer() {
   }, 1000);
 }
 
+//quizOver performs end of execution housekeeping chores.
 function quizOver() {
   timerElement.textContent = "Quiz Over";
   questionElement.textContent = " You scored " + playerScore + " points!!!";
-  console.log(timerElement.textContent);
   removeUlElement();
   presentHighScores();
   playerSubmit();
-  console.log("Before " + clearHighScores);
   startButton.style.display = "inline-block";
   viewHighScores.style.display = "inline-block";
   clearHighScores.style.display = "inline-block";
-  console.log("After " + clearHighScores);
 }
 
 function loadHighScores() {
@@ -137,10 +157,8 @@ function appendScoreUlElement() {
 function removeScoreUlElement() {
   var removeScores = document.getElementById("leaderboard-list");
   if (removeScores !== null) {
-    console.log("leaderboard-list exists");
     removeScores.remove();
   } else {
-    console.log("leaderboard-list does not exist");
   }
 }
 
@@ -179,7 +197,7 @@ function playerSubmit() {
 
   label = document.createElement("label");
   label.setAttribute("for", "playerText");
-  label.textContent = "Enter your Name: ";
+  label.textContent = "Enter your Name:";
   form.appendChild(label);
 
   input = document.createElement("input");
@@ -191,12 +209,7 @@ function playerSubmit() {
 }
 
 startButton.addEventListener("click", function () {
-  secondsLeft = 60;
-  question = 0;
-  playerScore = 0;
-  removeScoreUlElement();
-  setTimer();
-  presentQuestion();
+  init();
   startButton.style.display = "none";
   viewHighScores.style.display = "none";
   clearHighScores.style.display = "none";
@@ -205,10 +218,9 @@ startButton.addEventListener("click", function () {
 ulContainer.addEventListener("submit", function (event) {
   event.preventDefault();
 
-  //TODO: if player input is null, pass 'Player One' as player.
   var playerInput = document.getElementById("playerText").value.trim();
 
-  // Return from function early if submitted todoText is blank
+  // Return from function early if submitted text is blank
   if (playerInput === "") {
     return;
   }
