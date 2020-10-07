@@ -61,6 +61,36 @@ var questionArray = [
     choices: ["call function myFunction()", "myFunction()", "call myFunction()"],
     answer: "myFunction()",
   },
+  {
+    question: "How to write an IF statement in JavaScript?",
+    choices: ["if i = 5", "if i = 5 then", "if (i == 5)", "if i == 5 then"],
+    answer: "if (i == 5)",
+  },
+  {
+    question: 'How to write an IF statement for executing some code if "i" is NOT equal to 5?',
+    choices: ["if i <> 5", "if i =! 5 then", "if (i <> 5)", "if (i != 5)"],
+    answer: "if (i != 5)",
+  },
+  {
+    question: "How does a WHILE loop start?",
+    choices: ["while (i <= 10)", "while i = 1 to 10", "while (i <= 10; i++)"],
+    answer: "while (i <= 10)",
+  },
+  {
+    question: "How does a FOR loop start?",
+    choices: ["for i = 1 to 5", "for (i = 0; i <= 5)", "for (i = 0; i <= 5; i++)", "for (i <= 5; i++)"],
+    answer: "for (i = 0; i <= 5; i++)",
+  },
+  {
+    question: "How do you round the number 7.25, to the nearest integer?",
+    choices: ["Math.round(7.25)", "Math.rnd(7.25)", "rnd(7.25)", "round(7.25)"],
+    answer: "Math.round(7.25)",
+  },
+  {
+    question: "JavaScript is the same as Java.",
+    choices: ["True", "False"],
+    answer: "False",
+  },
 ];
 
 //Highscore array stored on users computer.
@@ -69,8 +99,9 @@ var highscores = [];
 //Load local storage when app launches.
 loadHighScores();
 
+//initialize variables, prep app, start timer and present first question.
 function init() {
-  secondsLeft = 60;
+  secondsLeft = 210;
   question = 0;
   playerScore = 0;
   removeScoreUlElement();
@@ -92,18 +123,7 @@ function setTimer() {
   }, 1000);
 }
 
-//quizOver performs end of execution housekeeping chores.
-function quizOver() {
-  timerElement.textContent = "Quiz Over";
-  questionElement.textContent = " You scored " + playerScore + " points!!!";
-  removeUlElement();
-  presentHighScores();
-  playerSubmit();
-  startButton.style.display = "inline-block";
-  viewHighScores.style.display = "inline-block";
-  clearHighScores.style.display = "inline-block";
-}
-
+//load high scores from local storage.
 function loadHighScores() {
   var storedHighScores = JSON.parse(localStorage.getItem("highscores"));
   if (storedHighScores !== null) {
@@ -111,10 +131,12 @@ function loadHighScores() {
   }
 }
 
+//save high scores to local storage.
 function saveHighScores() {
   localStorage.setItem("highscores", JSON.stringify(highscores));
 }
 
+//present a question.
 function presentQuestion() {
   if (question < questionArray.length) {
     questionElement.textContent = questionArray[question].question;
@@ -123,6 +145,7 @@ function presentQuestion() {
   }
 }
 
+//calls appendUlElement, and presents choices.
 function presentchoices() {
   appendUlElement();
 
@@ -136,6 +159,7 @@ function presentchoices() {
   }
 }
 
+//appends #choice-list <ul> to #ul-container to serve as parent element for <li> choices.
 function appendUlElement() {
   //build a new <ul> for each new question.
   choiceListUl = document.createElement("ul");
@@ -143,11 +167,13 @@ function appendUlElement() {
   document.getElementById("ul-container").appendChild(choiceListUl);
 }
 
+//removes #choice-list <ul> in preparation of the next group of questions/choices.
 function removeUlElement() {
   //remove <ul> containing previous choices
   choiceListUl.remove();
 }
 
+//check player selection, if incorrect decrement time by 10 seconds; advance to next question.
 function checkAnswer(playerChoice) {
   if (playerChoice !== answer) {
     secondsLeft -= 10;
@@ -155,22 +181,7 @@ function checkAnswer(playerChoice) {
   question++;
 }
 
-function appendScoreUlElement() {
-  leaderboardUl = document.createElement("ul");
-  leaderboardUl.setAttribute("class", "jumbotron");
-  leaderboardUl.setAttribute("id", "leaderboard-list");
-  leaderboardUl.textContent = "Top 5 Players";
-  document.getElementById("ul-container").appendChild(leaderboardUl);
-}
-
-function removeScoreUlElement() {
-  var removeScores = document.getElementById("leaderboard-list");
-  if (removeScores !== null) {
-    removeScores.remove();
-  } else {
-  }
-}
-
+//render highscore sheet in place of the questions/choices.
 function presentHighScores() {
   removeScoreUlElement();
   appendScoreUlElement();
@@ -183,16 +194,37 @@ function presentHighScores() {
   //only render the top 5 scores.
   topFiveScores = highscores.slice(0, 5);
 
+  //loop through our top 5 scores.
   for (var i = 0; i < topFiveScores.length; i++) {
     var leaderboardPlayer = topFiveScores[i].player;
     var leaderboardScore = topFiveScores[i].score;
 
+    //render a new <li> element for each high score in our array.
     var li = document.createElement("li");
     li.textContent = leaderboardPlayer + " - " + leaderboardScore;
     leaderboardUl.appendChild(li);
   }
 }
 
+//append score <ul> to #ul-container.
+function appendScoreUlElement() {
+  leaderboardUl = document.createElement("ul");
+  leaderboardUl.setAttribute("class", "jumbotron");
+  leaderboardUl.setAttribute("id", "leaderboard-list");
+  leaderboardUl.textContent = "Top 5 Players";
+  document.getElementById("ul-container").appendChild(leaderboardUl);
+}
+
+//remove score <ul> preparing UI for rendering new highscore list.
+function removeScoreUlElement() {
+  var removeScores = document.getElementById("leaderboard-list");
+  if (removeScores !== null) {
+    removeScores.remove();
+  } else {
+  }
+}
+
+//called when the quiz is over. we build a <form><label><input> for the player to enter the name.
 function playerSubmit() {
   var leaderboardListUl = document.getElementById("leaderboard-list");
 
@@ -217,6 +249,20 @@ function playerSubmit() {
   form.appendChild(input);
 }
 
+//quizOver performs end of execution housekeeping chores.
+function quizOver() {
+  timerElement.textContent = "Quiz Over";
+  questionElement.textContent = " You scored " + playerScore + " points!!!";
+  removeUlElement();
+  presentHighScores();
+  playerSubmit();
+
+  startButton.style.display = "inline-block";
+  viewHighScores.style.display = "inline-block";
+  clearHighScores.style.display = "inline-block";
+}
+
+//click event for Begin Quiz button, calls the init() and hides buttons during quiz.
 startButton.addEventListener("click", function () {
   init();
   startButton.style.display = "none";
@@ -224,6 +270,7 @@ startButton.addEventListener("click", function () {
   clearHighScores.style.display = "none";
 });
 
+//submit event for user submitting name when the quiz is over.
 ulContainer.addEventListener("submit", function (event) {
   event.preventDefault();
 
@@ -257,12 +304,15 @@ ulContainer.addEventListener("click", function (event) {
   presentQuestion();
 });
 
+//renders Highscores List and Clear Scores Button.
 viewHighScores.addEventListener("click", function (event) {
   presentHighScores();
   clearHighScores.style.display = "inline-block";
 });
 
+//set the array to an empty array, pushes the array to local storage and renders the Highscores.
 clearHighScores.addEventListener("click", function (event) {
   highscores = [];
+  saveHighScores();
   presentHighScores();
 });
