@@ -1,4 +1,4 @@
-# 04-CODE-QUIZ
+# [**04-CODE-QUIZ**](https://larrymcconville.github.io/04-code-quiz/)
 
 ## Project Goal
 
@@ -32,8 +32,7 @@ THEN I can save my initials and score
 
 ## Solution
 
-For this project we will utilize Bulma as opposed to Bootstrap.
-A container shall be placed on the page to represent the foundation of the responsive design.
+This project shall utilize Bootstrap for CSS styling, a single HTML file, and a single JavaScript file, providing a single page application. A container shall be placed on the page to represent the foundation of the responsive design.
 The page shall have an `<h1>` with a welcome message.
 The page shall have an `<h3>` with quiz instructions.
 The page shall have a `start` button.
@@ -92,9 +91,32 @@ The `quizOver` function
 
 ## HTML
 
+A single `HTML` page represents all of the application functionality whereby the logic is distributed across three sections.
+
+1 `<h4 class="jumbotron>` Presents questions to the user.
+
+2 `<div class="container" id="ul-container">` Serves as the parent tag anchor for:
+
+- `<li>` choice list
+- `<li>` highscore list
+
+3 `<div>` Containing the `Start`, `Show Score`, and `Clear Scores` buttons.
+
 ## CSS
 
+[reset.css](http://meyerweb.com/eric/tools/css/reset/) Has been included to set a respective user's browser instance to a known state prior to applying application styling.
+
+[Bootstrap](https://getbootstrap.com/) Has been utilized for class styling such as with containers where the `jumbotron` class has been applied.
+local css
+
+## Application Screen Shot
+
+![Quiz Question](./images/quiz-question.png)
+
 ## Mock-Up
+
+The following image shows the web application's appearance and functionality:
+![Code Quiz Demo](./images/04-web-apis-homework-demo.gif)
 
 ## Validation
 
@@ -102,4 +124,5 @@ The application html was scanned with the [Markup Validation Service](https://va
 
 ## Sources Referenced
 
-[w3schools](https://www.w3schools.com/quiztest/quiztest.asp?qtest=JS)
+[w3schools](https://www.w3schools.com/quiztest/quiztest.asp?qtest=JS) `|`
+[Eloquent JavaScript](https://eloquentjavascript.net)
