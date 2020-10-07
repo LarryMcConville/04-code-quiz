@@ -1,9 +1,11 @@
 # 04-CODE-QUIZ
 
 ## Project Goal
+
 As new developers proceed in their journey to becoming a full-stack web developer, it’s likely that they will be asked to complete coding assessments/whiteboard exercises, perhaps as part of an interview process. A typical coding assessment is a combination of multiple-choice questions and/or interactive coding challenges.
 
 To aid in becomming familiar with these tests and to provide one with a chance to apply the skills from this module, the objective of this project is to build a timed coding quiz with multiple-choice questions. The app will run in the browser, and will feature dynamically updated HTML and CSS powered by JavaScript. It should have a clean, polished, and responsive user interface.
+
 ## User Story
 
 ```
@@ -40,53 +42,53 @@ The page shall have `questions` and `answers` displayed.
 
 When the `start` button is clicked.
 
-* The `setTimer` function is called.
-* The `start` button changes to a `submit` button.
-* The `presentQuestion` function is called.
-* The question and answers posted to the page.
-* The correct answer is loaded into the DOM.
-* The tester will choose an answer.
-* The tester will click the `submit` button.
+- The `setTimer` function is called.
+- The `start` button changes to a `submit` button.
+- The `presentQuestion` function is called.
+- The question and answers posted to the page.
+- The correct answer is loaded into the DOM.
+- The tester will choose an answer.
+- The tester will click the `submit` button.
 
 When the `submit` button is clicked
 
-* If the correct answer was selected
-  * The tester is presented with a right answer selected message.
-  * The score is incremented.
-  * The `presentQuestion` function is called.
-* If the wrong answer was selected 
-  * The tester is presented with a wrong answer selected message.
-  * The timer is reduced by 10 seconds.
-  * The `presentQuestion` function is called.
+- If the correct answer was selected
+  - The tester is presented with a right answer selected message.
+  - The score is incremented.
+  - The `presentQuestion` function is called.
+- If the wrong answer was selected
+  - The tester is presented with a wrong answer selected message.
+  - The timer is reduced by 10 seconds.
+  - The `presentQuestion` function is called.
 
 When the `timer` is zero
 
-* The `quizOver` function is called.
+- The `quizOver` function is called.
 
 The `setTimer` function
 
-* The `timer` is initialized according to the number of questions in `question` array.
-* The `timer` will start counting down.
+- The `timer` is initialized according to the number of questions in `question` array.
+- The `timer` will start counting down.
 
 The `presentQuestion` function
 
-* The first question is loaded.
-* The `presentAnswers` function is called.
-* Subsequent calls will step through the questions.
-* When no questions remain the `quizOver` function is called.
+- The first question is loaded.
+- The `presentAnswers` function is called.
+- Subsequent calls will step through the questions.
+- When no questions remain the `quizOver` function is called.
 
 The `presentAnswers` function
 
-* Receives the current `questionArray` index.
-* Loads the related answers.
-* Loads the related correct answer.
+- Receives the current `questionArray` index.
+- Loads the related answers.
+- Loads the related correct answer.
 
 The `quizOver` function
 
-* Remove the `submit` button.
-* Present the testers score.
-* Add testers score to `highScore` array.
-* Question, answer and score variables are reset.
+- Remove the `submit` button.
+- Present the testers score.
+- Add testers score to `highScore` array.
+- Question, answer and score variables are reset.
 
 ## HTML
 
@@ -100,4 +102,4 @@ The application html was scanned with the [Markup Validation Service](https://va
 
 ## Sources Referenced
 
-[w3schools](https://www.w3schools.com/html/) `|` 
+[w3schools](https://www.w3schools.com/quiztest/quiztest.asp?qtest=JS)
