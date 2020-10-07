@@ -32,68 +32,85 @@ THEN I can save my initials and score
 
 ## Solution
 
-This project shall utilize Bootstrap for CSS styling, a single HTML file, and a single JavaScript file, providing a single page application. A container shall be placed on the page to represent the foundation of the responsive design.
-The page shall have an `<h1>` with a welcome message.
-The page shall have an `<h3>` with quiz instructions.
-The page shall have a `start` button.
-The page shall have a `timer` displayed.
-The page shall have `questions` and `answers` displayed.
+This project utilizes Bootstrap for CSS styling, a single HTML file, and a single JavaScript file, providing for a single page application. `Containers` are being utilized to group like elements and functionality, and to present a responsive design.
 
-When the `start` button is clicked.
+Code organization has all of the globally referenced `HTML` element mappings performed at the top followed by global `variables`, the `questionArray[]`, defining an empty `highscores[]`, and calling the `loadHighScores()` to perform an initial loading of highscores. The main body of the `script.js` file contains all of the functions, and at the bottom is all of the event listeners.
 
-- The `setTimer` function is called.
-- The `start` button changes to a `submit` button.
-- The `presentQuestion` function is called.
-- The question and answers posted to the page.
-- The correct answer is loaded into the DOM.
-- The tester will choose an answer.
-- The tester will click the `submit` button.
+## Game Play Logic
 
-When the `submit` button is clicked
+### When the `start` button is clicked
 
-- If the correct answer was selected
-  - The tester is presented with a right answer selected message.
-  - The score is incremented.
-  - The `presentQuestion` function is called.
-- If the wrong answer was selected
-  - The tester is presented with a wrong answer selected message.
-  - The timer is reduced by 10 seconds.
-  - The `presentQuestion` function is called.
+- The `init` function is called.
+- The `Begin Quiz`, `Show Scores` and `Clear Scores` buttons are hidden during game play.
+- The `init` function initializes variables, and calls the `setTimer()` and `presentQuestion()` functions.
 
-When the `timer` is zero
+### `setTimer()`
 
-- The `quizOver` function is called.
+- The `timer` is initialized with a 1000ms interval.
+- The `timer` immediately starts counting down.
+- When time expires or the end of the `questionArray[]` has been reached, the interval is cleared and the `quizOver()` is called.
 
-The `setTimer` function
+### `presentQuestion()`
 
-- The `timer` is initialized according to the number of questions in `question` array.
-- The `timer` will start counting down.
+- Checks the length of the `questionArray[]`.
+- Renders the question.
+- `presentChoices()`.
 
-The `presentQuestion` function
+### `presentChoices()`
 
-- The first question is loaded.
-- The `presentAnswers` function is called.
-- Subsequent calls will step through the questions.
-- When no questions remain the `quizOver` function is called.
+- Calls `appendUlElement()` which serves as the anchoring parent `<ul>` for the `<li>` items.
+- Loops through the choices for the current `questionArray[i]` and builds a dynamic list of `<li>` for _n_ choices.
 
-The `presentAnswers` function
+### `appendUlElement()`
 
-- Receives the current `questionArray` index.
-- Loads the related answers.
-- Loads the related correct answer.
+- Builds a `<ul>` for each new question.
 
-The `quizOver` function
+### When the user selects an answer
 
-- Remove the `submit` button.
-- Present the testers score.
-- Add testers score to `highScore` array.
-- Question, answer and score variables are reset.
+- `ulContainer.addEventListener(click)` calls
+  - `checkAnswer(`_with click target_`)`
+  - `removeUlElement()`
+  - `presentQuestion()`
+
+`checkAnswer()`
+
+- If player selected incorrect answer `secondsLeft` -=10
+- Increment `question` variable ++
+
+`removeUlElement()`
+
+- Removes `<ul>` containing previous collection of `<li>` choices.
+
+`ulContainer.addEventListener(submit)`
+
+- Receives player's initials.
+- declares a `newScore` object with player inititals and score.
+- Pushes the `newScore` object to our in memory `highscores[]`.
+- `saveHighScores`
+- `loadHighScores()`
+- `presentHighScores()`
+
+`quizOver()`
+
+- `removeUlElement()`
+- `presentHighScores`
+- `playerSubmit()`
+
+`presentHighScores`
+
+- Sorts the `highscores[]` in descending order so that we present highest scores at the top.
+- Slices `highscores[]` into a `topFiveScores[]`.
+- Loops through the `topFiveScores[]` creating `<li>` elements per n scores.
+
+`playerSubmit()`
+
+- Creates a `<form>`, a `<label>` and an `<input>` for user initials.
 
 ## HTML
 
 A single `HTML` page represents all of the application functionality whereby the logic is distributed across three sections.
 
-1 `<h4 class="jumbotron>` Presents questions to the user.
+1 `<div class="jumbotron>` Presents questions to the user.
 
 2 `<div class="container" id="ul-container">` Serves as the parent tag anchor for:
 
@@ -120,7 +137,8 @@ The following image shows the web application's appearance and functionality:
 
 ## Validation
 
-The application html was scanned with the [Markup Validation Service](https://validator.w3.org/).
+The application `HTML` was scanned with the [Markup Validation Service](https://validator.w3.org/).
+![HTML Validation](./images/validator.w3.org.png)
 
 ## Sources Referenced
 
