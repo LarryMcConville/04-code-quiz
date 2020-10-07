@@ -224,7 +224,7 @@ function removeScoreUlElement() {
   }
 }
 
-//called when the quiz is over. we build a <form><label><input> for the player to enter the name.
+//called when the quiz is over. we build a <form><label><input> for the player to enter the initials.
 function playerSubmit() {
   var leaderboardListUl = document.getElementById("leaderboard-list");
 
@@ -238,14 +238,15 @@ function playerSubmit() {
 
   label = document.createElement("label");
   label.setAttribute("for", "playerText");
-  label.textContent = "Enter your Name:";
+  label.textContent = "Enter your Initials:";
   form.appendChild(label);
 
   input = document.createElement("input");
   input.setAttribute("type", "text");
-  input.setAttribute("placeholder", "Enter your Name");
-  input.setAttribute("name", "playerText");
+  input.setAttribute("placeholder", "Enter your Initials");
+  input.setAttribute("initials", "playerText");
   input.setAttribute("id", "playerText");
+  input.setAttribute("maxlength", "3");
   form.appendChild(input);
 }
 
@@ -270,7 +271,7 @@ startButton.addEventListener("click", function () {
   clearHighScores.style.display = "none";
 });
 
-//submit event for user submitting name when the quiz is over.
+//submit event for user submitting initials when the quiz is over.
 ulContainer.addEventListener("submit", function (event) {
   event.preventDefault();
 
