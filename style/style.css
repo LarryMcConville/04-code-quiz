@@ -4,10 +4,6 @@
   box-sizing: border-box;
 }
 
-body {
-  /* background-color: #333; */
-}
-
 button {
   padding: 10px;
   margin: 24px;
@@ -30,6 +26,15 @@ h4 {
 
 p {
   font-size: 1rem;
+}
+
+hr {
+  border: 1px solid #ffffff;
+}
+
+label {
+  margin: 0;
+  padding: 0.5rem;
 }
 
 ul {
@@ -65,18 +70,14 @@ li:hover {
   background-color: #00d1b2;
 }
 
-hr {
-  border: 1px solid #ffffff;
-}
-
-label {
-  margin: 0;
-  padding: 0.5rem;
-}
 .container {
   text-align: center;
   padding: 15px;
   background-color: #333;
+}
+
+.jumbotron {
+  background-color: #8a4d76;
 }
 
 #question {
@@ -85,10 +86,6 @@ label {
   color: #ffffff;
   margin: 0;
   padding: 2rem;
-}
-
-.jumbotron {
-  background-color: #8a4d76;
 }
 
 #playerText {
