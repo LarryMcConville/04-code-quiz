@@ -32,13 +32,13 @@ THEN I can save my initials and score
 
 ## Solution
 
-This project utilizes Bootstrap for CSS styling, a single HTML file, and a single JavaScript file, providing for a single page application. `Containers` are being utilized to group like elements and functionality, and to present a responsive design.
+This project utilizes Bootstrap for CSS styling, a single HTML file, and a single JavaScript file. `Containers` are being utilized to group like elements and functionality, and to present a responsive design.
 
-Code organization has all of the globally referenced `HTML` element mappings performed at the top followed by global `variables`, the `questionArray[]`, defining an empty `highscores[]`, and calling the `loadHighScores()` to perform an initial loading of highscores. The main body of the `script.js` file contains all of the functions, and at the bottom is all of the event listeners.
+Code organization has all of the globally referenced `HTML` element mappings performed at the top followed by global `variables`, the `questionArray[]`, the definition of an empty `highscores[]`, and calling the `loadHighScores()` to prime the application with any stored highscores. The main body of the `script.js` file contains all of the functions, and all of the event listeners are at the bottom.
 
 ## Game Play Logic
 
-### When the `start` button is clicked
+### _When `Begin Quiz` is clicked_
 
 - The `init` function is called.
 - The `Begin Quiz`, `Show Scores` and `Clear Scores` buttons are hidden during game play.
@@ -65,12 +65,13 @@ Code organization has all of the globally referenced `HTML` element mappings per
 
 - Builds a `<ul>` for each new question.
 
-### When the user selects an answer
+### _When an `answer` is selected_
 
-- `ulContainer.addEventListener(click)` calls
-  - `checkAnswer(`_with click target_`)`
-  - `removeUlElement()`
-  - `presentQuestion()`
+`ulContainer.addEventListener(click)` calls
+
+- `checkAnswer(`_with click target_`)`
+- `removeUlElement()`
+- `presentQuestion()`
 
 `checkAnswer()`
 
@@ -106,18 +107,28 @@ Code organization has all of the globally referenced `HTML` element mappings per
 
 - Creates a `<form>`, a `<label>` and an `<input>` for user initials.
 
+### _When `Show Scores` is clicked_
+
+- `presentHighScores()`
+
+### _When `Clear Scores` is clicked_
+
+- The in memory highscore array is set to null `highscores = []`
+- `saveHighScores()`
+- `presentHighScores()`
+
 ## HTML
 
 A single `HTML` page represents all of the application functionality whereby the logic is distributed across three sections.
 
-1 `<div class="jumbotron>` Presents questions to the user.
+- `<div class="jumbotron>` Presents questions to the user.
 
-2 `<div class="container" id="ul-container">` Serves as the parent tag anchor for:
+- `<div class="container" id="ul-container">` Serves as the parent tag anchor for:
 
-- `<li>` choice list
-- `<li>` highscore list
+  - `<li>` choice list
+  - `<li>` highscore list
 
-3 `<div>` Containing the `Start`, `Show Score`, and `Clear Scores` buttons.
+- `<div>` Containing the `Begin Quiz`, `Show Score`, and `Clear Scores` buttons.
 
 ## CSS
 
