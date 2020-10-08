@@ -261,7 +261,7 @@ function quizOver() {
   removeUlElement();
   presentHighScores();
   playerSubmit();
-  //answerConfirm.textContent = "";
+  answerConfirm.style.display = "none";
 
   startButton.style.display = "inline-block";
   viewHighScores.style.display = "inline-block";
