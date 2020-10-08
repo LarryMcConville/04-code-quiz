@@ -7,6 +7,7 @@ var questionElement = document.getElementById("question");
 var ulContainer = document.getElementById("ul-container");
 var choiceListUl = document.getElementById("choice-list");
 var scoreElement = document.getElementById("score");
+var answerConfirm = document.getElementById("answer-confirm");
 
 //Global variables.
 var playerScore = 0;
@@ -177,6 +178,9 @@ function removeUlElement() {
 function checkAnswer(playerChoice) {
   if (playerChoice !== answer) {
     secondsLeft -= 10;
+    answerConfirm.textContent = "Wrong Answer!";
+  } else {
+    answerConfirm.textContent = "Correct Answer!";
   }
   question++;
 }
@@ -257,6 +261,7 @@ function quizOver() {
   removeUlElement();
   presentHighScores();
   playerSubmit();
+  //answerConfirm.textContent = "";
 
   startButton.style.display = "inline-block";
   viewHighScores.style.display = "inline-block";

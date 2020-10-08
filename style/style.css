@@ -114,3 +114,9 @@ label {
 #btn-clear-scores {
   display: none;
 }
+
+#answer-confirm {
+  font-weight: lighter;
+  font-size: 1.5rem;
+  color: #ffffff;
+}
