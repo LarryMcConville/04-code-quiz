@@ -133,6 +133,7 @@ local css
 ## Mock-Up
 
 The following image shows the web application's appearance and functionality:
+
 ![Code Quiz Demo](./images/04-web-apis-homework-demo.gif)
 
 ## Validation
