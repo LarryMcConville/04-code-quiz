@@ -1,10 +1,10 @@
-# [**04-CODE-QUIZ**](https://larrymcconville.github.io/04-code-quiz/)
+# [**04-CODE-QUIZ**](https://larrymcconville.github.io/04-code-quiz/) :link:
 
 ## Project Goal
 
 As new developers proceed in their journey to becoming a full-stack web developer, it’s likely that they will be asked to complete coding assessments/whiteboard exercises, perhaps as part of an interview process. A typical coding assessment is a combination of multiple-choice questions and/or interactive coding challenges.
 
-To aid in becomming familiar with these tests and to provide one with a chance to apply the skills from this module, the objective of this project is to build a timed coding quiz with multiple-choice questions. The app will run in the browser, and will feature dynamically updated HTML and CSS powered by JavaScript. It should have a clean, polished, and responsive user interface.
+To aid in becoming familiar with these tests and to provide one with a chance to apply the skills from this module, the objective of this project is to build a timed coding quiz with multiple-choice questions. The app will run in the browser, and will feature dynamically updated HTML and CSS powered by JavaScript. It should have a clean, polished, and responsive user interface.
 
 ## User Story
 
@@ -67,11 +67,10 @@ Code organization has all of the globally referenced `HTML` element mappings per
 
 ### _When an `answer` is selected_
 
-`ulContainer.addEventListener(click)` calls
-
-- `checkAnswer(`_with click target_`)`
-- `removeUlElement()`
-- `presentQuestion()`
+- `ulContainer.addEventListener(click)` calls
+  - `checkAnswer(`_with click target_`)`
+  - `removeUlElement()`
+  - `presentQuestion()`
 
 `checkAnswer()`
 
@@ -85,7 +84,7 @@ Code organization has all of the globally referenced `HTML` element mappings per
 `ulContainer.addEventListener(submit)`
 
 - Receives player's initials.
-- declares a `newScore` object with player inititals and score.
+- declares a `newScore` object with player initials and score.
 - Pushes the `newScore` object to our in memory `highscores[]`.
 - `saveHighScores`
 - `loadHighScores()`
