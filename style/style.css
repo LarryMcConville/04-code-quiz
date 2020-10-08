@@ -45,14 +45,15 @@ ul {
 
 li {
   height: 50px;
-  margin-top: 5px;
-  margin-bottom: 5px;
+  margin-top: 1px;
+  /* margin-bottom: 5px; */
   padding: 5px;
   background-color: #8a4d76;
   color: #ffffff;
   font-size: 1rem;
   line-height: 1.5;
-  border-radius: 0.25rem;
+  border-radius: 30px;
+  justify-content: center;
 }
 
 li:before {
@@ -84,7 +85,7 @@ li:hover {
   font-weight: lighter;
   font-size: 1.5rem;
   color: #ffffff;
-  margin: 0;
+  margin: 0 0 1rem 0;
   padding: 2rem;
 }
 
@@ -97,7 +98,11 @@ li:hover {
 }
 
 #ul-container {
-  padding: 1rem 0 1rem 0;
+  padding: 0;
+}
+
+#choice-list {
+  margin: 0;
 }
 
 #leaderboard-list {
